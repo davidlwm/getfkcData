@@ -126,8 +126,19 @@ def fetch_store_info(cookies, params):
         headers=headers,
     )
     #print(response.text)
+
     return response.text
 
+
+
+def check_for_login_state(html_content):
+    tree = html.fromstring(html_content)
+    # 寻找所有的<input>标签并检查'value'属性是否为'Login'
+    login_buttons = tree.xpath("//input[@type='submit' and @class='buttons' and @value='Login']")
+    if not login_buttons:
+        return True  # 不存在登录按钮
+    else:
+        return False  # 存在登录按钮
 
 def extract_store_data(html_content):
     # 初始化字典用于存储每个 STORE 的内容
@@ -210,7 +221,14 @@ def process_tasks_from_queue(connection,conn, cookies):
 
         # 执行任务
         params = {'sId': sId}
+
         #response = fetch_store_info(cookies, params)
+        # if not check_for_login_state(response):
+        #     get_cookies_from_fkcn(username, password)
+        #     time.sleep(5)
+        #     response = fetch_store_info(cookies, params)
+
+
         with open('total.html', 'r', encoding='utf-8') as file:
             response = file.read()
 
