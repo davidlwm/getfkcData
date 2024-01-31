@@ -6,11 +6,29 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
 
 def get_cookies_from_fkcn(username, password):
-    driver = webdriver.Chrome()
-    driver.get('https://www.fkcn.com/index.xhtml')
+    print("end")
+    # 指定ChromeDriver的路径
+    #chrome_driver_path = 'H:/美的代码/midea/go/c++/trunk/efficiency_promote/simulation_click/revesivation/chromedriver.exe'
 
+    # 创建WebDriver实例
+    #driver = webdriver.Chrome(executable_path=chrome_driver_path)
+
+    # 使用 webdriver-manager 来自动管理驱动程序版本
+    service = Service(ChromeDriverManager().install())
+
+    # 创建 WebDriver 实例
+    driver = webdriver.Chrome(service=service)
+
+    #driver = webdriver.Chrome()
+    driver.get('https://www.fkcn.com/index.xhtml')
+    print("end")
     # 等待元素加载
     wait = WebDriverWait(driver, 10)
     china_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[.//img[contains(@src, 'zh_flag.gif')]]")))

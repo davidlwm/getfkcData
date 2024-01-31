@@ -23,18 +23,19 @@ db_user = 'root'
 db_password = '123456'
 connection = ''
 cookies = ''
+taskCount = 0
 
 def process_store_info(params, cookies,connection):
-    #global username, password, connection, tree_structure
+    global  username, password, tree_structure
 
-    # response = fetch_store_info(cookies, params)
-    # if not check_for_login_state(response):
-    #     get_cookies_from_fkcn(username, password)
-    #     time.sleep(5)
-    #     response = fetch_store_info(cookies, params)
+    response = fetch_store_info(cookies, params)
+    if not check_for_login_state(response):
+        get_cookies_from_fkcn(username, password)
+        time.sleep(5)
+        response = fetch_store_info(cookies, params)
 
-    with open('total.html', 'r', encoding='utf-8') as file:
-        response = file.read()
+    # with open('total.html', 'r', encoding='utf-8') as file:
+    #     response = file.read()
     data = extract_store_data(response)
 
     add_tasks_from_data(data, connection)
@@ -59,13 +60,17 @@ def process_tasks_from_queue(connection, cookies):
         process_store_info(params, cookies,connection)
         # 完成任务后从队列中删除
         complete_task(connection, task_id)
-        random_delay = random.uniform(5, 15)
+        # taskCount = taskCount +1
+        # if taskCount >= 20:
+        #     time.sleep(random.uniform(30, 50))
+        random_delay = random.uniform(15, 25)
         time.sleep(random_delay)
 
 def main():
     logging.info("------------------------------process begin------------------------------\n\n")
-
-    # cookies = get_cookies_from_fkcn(username, password);
+    print("start")
+    cookies = get_cookies_from_fkcn(username, password);
+    print("end")
     connection = create_db_connection(host_name, db_name, db_user, db_password)
     create_binary_tree_table(connection)
     create_tasks_table(connection)
@@ -75,9 +80,8 @@ def main():
         enqueue_task(connection, rootsId)
 
     process_tasks_from_queue(connection, cookies)
-    logging.info("------------------------------process end------------------------------\n\n")
-
     connection.close()
+    logging.info("------------------------------process end------------------------------\n\n")
 
 if __name__ == "__main__":
     main()

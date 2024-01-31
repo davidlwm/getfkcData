@@ -86,6 +86,7 @@ def fetch_store_info(cookies, params):
     return response.text
 
 def check_for_login_state(html_content):
+    html_content = html_content.replace('<?xml version="1.0" encoding="UTF-8"?>', '')
     tree = html.fromstring(html_content)
     # 寻找所有的<input>标签并检查'value'属性是否为'Login'
     login_buttons = tree.xpath("//input[@type='submit' and @class='buttons' and @value='Login']")
