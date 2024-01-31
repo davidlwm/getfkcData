@@ -1,0 +1,617 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<html xpath="1"><head>
+	<title>查看下属</title>
+<link rel="icon" href="/resources/images/favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="/resources_new/bootstrap/3.3.7/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="/resources_new/stylesheet/page_1.css">
+    <link rel="stylesheet" type="text/css" href="/resources_new/stylesheet/public_zh_CN_1.css">
+<link rel="stylesheet" type="text/css" href="/resources_new/stylesheet/stylesheet.css">
+<script language="javascript" type="text/javascript" src="/resources_new/jquery/1.9.1/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="/resources_new/jquery/1.17.0/jquery.validate.js"></script>
+<script src="/resources_new/bootstrap/3.3.7/bootstrap.min.js"></script>
+<script language="javascript" type="text/javascript" src="/resources_new/js/dy_index.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/resources_new/js/sc000000.js" charset="UTF-8"></script>
+<script language="javascript" src="/resources_new/js/banner.js"></script>
+<script language="javascript" src="/resources_new/js/xuanxiang.js"></script>
+<script type="text/javascript" language="javascript">
+    //<![CDATA[
+    //alert("after jqury");
+    if (window.XMLHttpRequest) {
+        // Supports Ajax.
+    } else {
+        alert('ajax not supported browser');
+    }
+    var fkcValidator;
+
+    function log(msg) {
+        if (console) {
+            console.log(msg);
+        }
+    }
+
+    function reportError(err) {
+        var data = {};
+        data['msg'] = err;
+
+        $.post(
+            '/open/reportError.xhtml',
+            data,
+            function (data, textStatus, jQxhr) {
+
+            },
+            'text'
+        );
+    }
+
+    var document_ready_fn_array = [];
+    document_ready_fn_array.push({
+        p: 0, fn: function () {
+            if ($('#cover')) {
+                $('#cover').fadeOut();
+            }
+        }
+    });
+    $(document).ready(function () {
+        document_ready_fn_array.sort(function (a, b) {
+            return a.p - b.p;
+        })
+            .forEach(function (entry) {
+                try {
+                    entry.fn();
+                } catch (err) {
+                    log(err);
+                    reportError(err);
+                    reportError(err.stack);
+                }
+            });
+    });
+    //]]>
+</script>
+
+<style>
+
+    select option {
+        font-weight: bold;
+    }
+
+    a {
+        font-weight: bold;
+        color: #004a68;
+    }
+
+    #benefits ul {
+        padding-left: 15px;
+    }
+
+    #benefits li {
+        list-style-type: disc;
+    }
+
+
+    input {
+        text-align: center;
+        background: #efefdf;
+    }
+
+    textarea {
+        background: #efefdf;
+    }
+
+    .row.cart {
+        padding-top: 10px;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .modal-body {
+        /* 100% = dialog height, 120px = header + footer */
+        max-height: calc(100% - 120px);
+        overflow-y: scroll;
+    }
+
+    .modal {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+    .modal:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px; /* Adjusts for spacing */
+    }
+
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    #cover {
+        width: 100%;
+        height: 100%;
+        background-image: url("/resources_new/images/ajax-loader.gif");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        position: fixed;
+        z-index: 10;
+    }
+</style>
+</head><body>
+	
+
+
+<div id="cover" style="display: none;"></div>
+<div class="top_all">
+	<div class="top">
+		<div class="top1">
+<form id="j_idt15" name="j_idt15" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt15" value="j_idt15">
+
+				<a href="/index.xhtml"><span style="color: #fff;">中国大陆  (改变国家/地区)</span>
+				</a>
+				<span>
+<!--&lt;f:selectItem itemValue="MS"-->
+			  <!--itemLabel="Bahasa Malaysia" /&gt;-->
+<select name="j_idt15:j_idt19" size="1" style="color: #fff;font-size:14px;border-style:none;background-color: #3F3F3F; padding: 2px;" onchange="submit()">	<option value="EN">English</option>
+	<option value="ZH_CN" selected="selected">中文简体</option>
+	<option value="ZH_TW">中文繁體</option>
+	<option value="ES">Español</option>
+	<option value="JA">日本語</option>
+	<option value="KO">한국어</option>
+	<option value="TH">สยาม</option>
+	<option value="RU">росcия</option>
+	<option value="IN">Bahasa Indonesia</option>
+	<option value="VI">Tiếng Việt</option>
+	<option value="MY">မြန်မာ</option>
+	<option value="KM">ភាសាខ្មែរ</option>
+</select></span>
+				<input type="hidden" name="queryString" value="sId=2308993&amp;sId=2308993"><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="j6uqDJPC1fye0BTUeZ2GX2eyySAbQzGYhHMe5/1JM5fyaIma7Wilv0EipsiQBBbfIfck60W5KHpm+MPPt5fdfeddNR47q8j3oOHCAYazaEAH1yk1l8RKdQ+MwQhkWUiMfcPQJWkMA/ikolT6iv3gehhcwg+vMLsqDgFlDfzIiSF1yuI88XXKWhK/zMr02gGnmg03qq3Lmrt7VlRU4CVH6YWC2irQRFGcvR7Qs+1ZhiS8L/+zLTmC0fOjPr1gUxJVPvZd02oHnL7T3GtJMdp0GGCHaE6zEiRU569LISYa3J/G0ZWO0RYcnLZVKm4r2tNluKGMaloRE653Y72JAgzCpukYos0g6SkxFJmmKpVpRNytoY7eLGZ+23BGP0IGI10lUhG04lll3V1cqX+IRB+JaXMH7M8Sld7Mdy1mU385FRTiSVXBYvYKWzv70U6MvwWBDqFX6InyTOt7HCYWqIQYiptJcI96JrcpORRPcfFLKA8dKObFFcZv6kH0mH55/5XCH010IW0sDHH8GnZtOm4Bedltz0U6YSEie0YLvtkLbsmSPxOOLMWRlROJ0JJHxySvU0RPD65vZGHbZGoSlXlbB3j6Ch3LWW3KRjyhLKrPIPIWiBep1BAec5nIeJvxiIPvWGOUCXhT8+jALX5Q6gHi+2I7ZEFW8KMgpN+mHe8dWUqMV5aWPYAmWAjVPNuG5DrabYk5q2XL/7hO6PoUzJmo3p/1cHEtWxAK25cAl85otkY1Qq1L3RFKs/2gq/KDmDftw0luz32XqgFEHGcz+4vN2bt2oDDbFQVLcvCQYENLk+8USFkRLSp6hHlYnkfMhfMtS6xEndrAX3rBU2bwNkXW7AvgUotf3CDj6k3wdYLH/Wk6yECbiYvuk3oKySe9HyDzSoySQTRd3r2cH10NwL7gAWERrJW1y0zf8gILkSTPopAZAj7gamK9V42MCFbsCgKgf2xWG+b0pNFcYSY7bFGx5qKbAWXI3O/eDQC/INFG5P87gEJYdfsgnskN91bQqKUukfdW09iTfjPYuzbcR/X50aOea+iSYEIMMIKrriqMWX0UivWfY/WkkviRgoZlw8POjLX0uzZzrg4b/sBZRUXUxwC55jLc9B3fTus1bOjeg6ml++aW0zSiKQdlBAxgwCsH17MAw564XII62xySoVEx6/ifb4pwCh+K/LcFCsNPWtxkxGE2BmhQpZVXFlC5a5W4eGXm/B5cAqNzyHbf8BaxuKN8JE8erM8kS3uytPamf8Fri1mPzRKKo1SiJStLP23XKyDeh9iQXo9WZiM9cfbYflZ+XmA9Gz9l3g6CRdVLi/U=" autocomplete="off">
+</form>
+		</div>
+
+
+		<div class="top2">
+			<span style="position: relative; margin-left: 20px;">
+<form id="j_idt37" name="j_idt37" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt37" value="j_idt37">
+
+<script type="text/javascript" src="/javax.faces.resource/jsf.js.xhtml?ln=javax.faces"></script>
+<a href="#" style="color: #fff;" onclick="mojarra.jsfcljs(document.getElementById('j_idt37'),{'j_idt37:j_idt38':'j_idt37:j_idt38'},'');return false">[下网]</a><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:1" value="6JGhpFbmB92TWOVOGjD78e4RvVhm+x4MNr0CLdpYu3Gi9XtLJ2LYY0pJ4N8UH0AMFBMWrKy1HtS+OHqsNIAmZGTEdj/Etjx3GxV19fAhAFx68YsVx5B/4/YwMAFKNORCddtZWlMUdecU278OsJF3iv/CojjNzyKs/BnN/DTwdEbPlT59IkNmWsYaDdZy2HLdvHJBiSF5vfN34Pqc85V21DACpQO6fyHT0B0wtgOeK1KarQH7CFje/L1VtPxpt+tntskQUTVV7+GImYS7EIUI9dmIP8VxPuLRc5mdWf7O1uQ2pR3l+etQ2qTut9yJ+SsfQ8YgOE7lYjGF5y3EPIPE5XAdEG8F05gB4Cam9KniUhTMvZW0l06Ey9RpsIv6IjGMJLTBqus3ID+YJJBW1o3hLuIiOC7gmChiUNq921yLQ8xoCBwHlLcBlQM36ypbxeJGT8Hd2q1IR1O0OpoepuqN2SWAu/sO4ULj254CPM8bjGFtxbi40D1QqwFpg2TthIHraPak8Q2RN6DOYwMXhsnkbs00mO3qa66xTOre0iITbbbhUGOLg8p3nYzBn1YYUGPZXWG3QMqaKJYDFLytnrNG94qlZNfISIsaTU+5JKScTLXSJ6VXAPLT7TC3L4+4cEkv8IeJTG1PjLo0bkb5IJKVXST5DddcscXYGR7nl9+rpuC+YhZBrvtxhAEEALtaRzkPUwJH5MIBlwzCT2XFRz6NR27gHQQA0TP3Iln0pPH6gAp/raxZ+WlLFgRFyKXdSKaMQfvuIgIC/CLmSgarUHXkFiGOdGvuk/imPKw+H6TnDCnZR5IzJaG42Fh/reVKIlvcM+KpQQIhu3aDgjmMqpacMf+/ZHQZODE8LuzPci1ilTvfFLsd43MwwbOHZ6PxIBHYkuy/xMpXujUtPB3psr04yIIYlQ25luxmPMPTIpmxYpVDmLwaXel9M3NJDsFXU8f/ncdq/AEnRHYNiXLLdY3wWI+OLfMVs1os4NJhxk1FSkLfc/yZBjIpQu0yr7iMZ2OmpkO4JLqlLurb7wD2nlEJiRoQ54Mr+IIGwlIXrjMl44LAY3A1YwVq8rBqgXU5PI3xqqsx7fsCkSL0PqJUNEOsfAqaj3iZTSKAvx3spSU6fMsKPl374pDylbA0ct4kHLmEG0G5Wb9FYGU6YQ/mcY9HMAJS/aM0VvG91U9bF5YFcuN8KzpJezdWdWb7DkMgAHBCIFa+cSxY/io/164EKoG0fOzYcnT6TxEthp0DTfVXbI7ctcZd+UALl2Ga3A0XmbkgXUteOILiw1ZGtOkdRpIrwzSLx3L5t/esxy0alF4dI94=" autocomplete="off">
+</form> </span> <a href="/public/contactUs/contactus.xhtml"><span style="color: #fff;">与公司联系</span></a>
+
+			<a href="/public/shoppingCart/shopping_cart.xhtml" onmouseover="show('shoppingCartSummary')" onmouseout="hide('shoppingCartSummary')">
+				<img src="/resources_new/images/transparent.png" style="float:right;margin-top:12px;" class="shopping_cart_bg"><span style="color: #fff;">您的购物车 (0)</span>
+
+			</a>
+					<a href="/members/office_home.xhtml"><span style="color: #fff;">[我的办公室]</span></a>
+		</div>
+	</div>
+</div>
+
+<div class="nav_all">
+	<div class="nav">
+		<div class="nav1">
+			<a href="/home.xhtml">
+					<img src="/resources_new/images/transparent.png" id="fkc_navigation_logo" style="height: 60px; vertical-align: middle">
+			</a>
+		</div>
+			<div class="nav2">
+				<ul>
+					<li onmouseover="show('proxia1')" onmouseout="hide('proxia1')">
+						<a href="/public/products/products_home.xhtml">产品介绍 </a>
+						<div class="proxiala1" style="display: none; z-index: 999999; position: absolute" id="proxia1">
+
+							<div class="proxialb_box">
+								<div class="proxialb_box_2" style="z-index: 999999; position: absolute">
+									<a href="/public/products/products_home.xhtml"><span style="color:#004a68">产品介绍</span>
+									</a> <a href="/public/products/well_series.xhtml"><span style="color:#004a68">健康系列</span>
+									</a>
+									<a href="/public/products/accessories.xhtml"><span style="color:#004a68">辅助资料</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li onmouseover="show('proxia2')" onmouseout="hide('proxia2')">
+						<a href="/public/fromHome/qualityPromise.xhtml">品质保证 </a>
+						<div class="proxiala1" style="display: none; z-index: 999999; position: absolute" id="proxia2">
+
+							<div class="proxialb_box">
+								<div class="proxialb_box_2" style="z-index: 999999; position: absolute">
+									<a href="/public/fromHome/qualityPromise.xhtml"><span style="color:#004a68">品质保证</span>
+									</a> <a href="/public/fromHome/certificates.xhtml"><span style="color:#004a68">资质证照</span>
+									</a> <a href="/public/fromHome/ingredients.xhtml"><span style="color:#004a68">精选成分</span>
+									</a><a href="/public/aboutFKC/about3_awards_and_honors.xhtml"><span style="color:#004a68">FKC荣誉</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</li>
+
+
+					<li onmouseover="show('proxia3')" onmouseout="hide('proxia3')">
+						<a href="/public/fromHome/aboutUs.xhtml">关于我们 </a>
+						<div class="proxialb1" style="display: none; z-index: 999999; position: absolute" id="proxia3">
+							<div class="proxialb_box">
+
+								<div class="proxialb_box_2" style="z-index: 999999; position: absolute">
+									<a href="/public/fromHome/aboutUs.xhtml"><span style="color:#004a68">公司介绍</span>
+									</a> <a href="/public/fromHome/mission.xhtml"><span style="color:#004a68">使命与愿景</span>
+									</a> <a href="/public/aboutFKC/about2_leadership.xhtml"><span style="color:#004a68">执行团队</span>
+									</a><a href="/public/aboutFKC/about3_awards_and_honors.xhtml"><span style="color:#004a68">FKC荣誉</span>
+									</a>
+
+								</div>
+
+							</div>
+
+						</div>
+					</li>
+					<li><a href="/public/contactUs/contactus.xhtml" class="nav-item nav-link">联系我们</a></li>
+				</ul>
+			</div>
+
+	</div>
+</div>
+
+
+<div class="position_all">
+	<div class="position">
+		<div class="position_l">
+			<div class="position_l_1">
+				<a href="/members/office_home.xhtml">我的办公室</a>
+			</div>
+			<div class="position_l_1">查看下属
+			</div>
+		</div>
+	</div>
+</div>
+<div class="bg_all" style="background: url(/resources_new/images/index132.jpg) no-repeat top center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+	<div class="main">
+		<div class="main25">
+		<div class="main">
+			<div class="main25_r1_network">
+				<div class="main25_r1_4_nei" style="margin-left: 150px;">
+					<table width="100%" border="1" cellpadding="3" cellspacing="3">
+						<tbody><tr>
+							<td align="center" colspan="4">顾客编号 <strong>3370719
+							</strong> &nbsp; 店号
+								<strong>1 </strong>
+								&nbsp; <a class="buttons" href="downlines/downlines.xhtml" target="_blank">查看所有下属店
+								</a></td>
+						</tr>
+						<tr>
+							<td align="center" width="25%">您消费体系现有总店数</td>
+							<td align="center" width="25%"><strong>29 </strong></td>
+							<td align="center" width="25%">可加新店数额</td>
+							<td align="center" width="25%"><strong>0
+							</strong></td>
+						</tr>
+						<tr>
+							<td align="center" width="25%">本星期新增加店数</td>
+							<td align="center" width="25%"><strong>0 </strong></td>
+							<td align="center" width="25%">&nbsp;</td>
+							<td align="center" width="25%">&nbsp;</td>
+						</tr>
+					</tbody></table>
+					<br>
+<form id="j_idt245" name="j_idt245" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt245" value="j_idt245">
+
+						<table width="100%" border="1" align="center" cellpadding="3" cellspacing="3">
+							<tbody><tr>
+								<td colspan="5" align="center">请输入您想查询的编号和店号。您只能查询自己和您的下属店。</td>
+							</tr>
+							<tr>
+								<td align="center">店主编号</td>
+								<td align="center"><input type="text" id="lookupStore" name="customerId" style="text-align: center; font: 18px" value="3370719"></td>
+								<td align="center">店号</td>
+								<td align="center"><input type="text" name="storeNumber" style="text-align: center; font: 18px" value="1"></td>
+								<td align="center"><input type="submit" name="j_idt253" value="查询" class="buttons">
+								</td>
+							</tr>
+						</tbody></table><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:2" value="SUw44hZS/2XTyhWVcLq3wd9ZshRcffsJOmejnTUVAOQABdWfpaiI6g4nVKylNkdvW2gM8KrgmT8T/Vo/TWL9vgDyHc2cFWktCezfSH+2CrK0frUzjqn8N9zWe/6+ec/7x9wFhcclLPBh1aw9vJkw9xWzONURfVwqwtjKTdQ+sF2jMkkMlDuTYIpo88yCneUqcDmVf8V9Rx5w4aMyfzrgbHPhhfnXhYMLe4G88RwTASk+6Jcg0fTjvRVdjbH4BlOClhw/MZ+UqrDq5Ju4Yvcl31Io+XXkcmSRjQRGB4tYdymlNB9BCLpQ+Qjn7S+Kob1fX+tVkym+e/PQN/nzZYYrJQCJtb4R7HHR8aZQSt8Zpz5fvJxJzgq8IWB/+NGE81uZ9A6hBRu8KuZ/mBwqnkgum2+Ax76AGrS1/e3Pn/zYhpPCnKkTstAfiJBwHyfXp+3Zl7f93a7MpNcC5hRQzSp2VglS/5Z3CzUg1gPiH+GspD6j4jfsduSwMd3/70uiHo3pwW+ulB2dl44n1VBvGfwT2l6m6GHcUkWzelYOUqyIoGw4wEzjfQVjMUhPACBegK4oVv2rL6k6/UMqvuKwLN6/idFlgKD79w/MlyBhxbJiR3NUYdHsmvIlSHX5VMQ7aacBVDM926lQHCIdTGtofXeBfZ1Y4kJrmuDMC5VjidZIOTromAz9Z61pybig4bxc1P8A+lJQRLfMjMTnT9ppKRKqEPrgQjbPbfGIynQySFmSiBpYCrJI9yfZdSoOMKkUbyfWBAyibwD42fEa1z/KtGO/dmEAl+88slFfs94u+tR7b/QiL9kI7ApGgRztk6TX+DUxABSr2UqsX0COs/HYo1vO8rRa+/P4YRkVF4sHFpEUCsGzys69bcMAq6+aGB8UE7YnTGDBCQzRaO7ko5FpMoAR9qg/dVEGBFQpWwujWilwDLC7hAT6PrjSAVLzaiyVd/FHvogjQ+PUjeISRc4mtjg6nN1lnkqPRAD79tQPGUvCr4m32rWIZagGiny36gwFgvw9aOtF6OtjAo9Rv94gtt5dYTbcnwRBkjVyGsV3ulvQ/TdHJtOyKO0injCmSnRl36eOjZLxG3B3lEjrLZlmNv7iZYQMqm7HLExtaXiJlgn8vIvdVaQLEtzoXFVOPqbW6ofWRbQAJYRTZAqREa4QtRFI0hoMRYL21MSnZGmB0TATdZL4x3RQUP1atp0jNK2Gw/w+3O2VeT9H7IeWGsP4wn7hefWqs5fNVVb6vDnX7sSjCyPeTabO2obM06hiPnNX9TSmqtUJ1s2Yprt1fOHtAIT35fNd71gtujlIxNB/Me1fKlU=" autocomplete="off">
+</form>
+				</div>
+                    <div style="font-size: 18px; margin-top: 20px; text-align: center"><font color="#FF0000">*红色表示该店货款尚未收到.</font> <br> <font color="green">*绿色表示只是消费者. </font><br><font color="#004a68">*蓝色表示货款已收到.</font>
+                        <br>
+<form id="j_idt262" name="j_idt262" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt262" value="j_idt262">
+上属店:&nbsp;
+                                <a href="storeNetworks.xhtml?sId=2306676">
+                                    全球星
+                                </a>&nbsp;
+                                店号 : 4 
+                                <br><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:3" value="W9Kqmo1w+846Pv0CJrZRqhl6477rI7JcVvHgw7+A3O5jhs1tEvo6/E1TsMZs1ndV3d9SD0pAuNwyjpZC90VhY3mNIbUzXcVhA0Mcih/LLp1wvfsifmdNdIGbDDFnG/JYDeu+QB6rTTy84pfHMJZzcwUcyfhF+8u5UCwHxd7Xui4rqGTpbU2ZsSLiTeYAiYKrKRuVoNo9Rz93UtshUT6IhqAMUHMNeMUkrkh8tPiEMbmy4N7PX6aQ6HG5573JE9wS4V/OZIPAxvW5fmTGLb0nPYJ9goeQoEhiRsGJCf5uVvT1fP8Y/ZIRkiifDrqTtGE2YAQ/G5V45TFxFmhaijTzA4U7iNYHpXVyh5hheBn2fbXOX/xKMOrASEEdFHhGK5zcCSMxmSr52Iql1G5zmSXQn96src6hpsmhLo84KBG4kUgGNlW0s89pJVQkYrEJyA+PIuYPmCdo2WZyECNqL3BeBEfA+tpcw2TJq9EuAp0fLOMW1/DmfGx4JKEl8ChOBQn0JdOzTawOnsfEwrlD6tFgKEJR3cUQepk0lLYgu19bjrEGV1uE7zuyqcdS2a6tdx9m8XFQ2OCYJT3KU51XA2//COBizc11s4EJ3Sl9qrzM8HQoK0aHt55JRgjLYtdsHyKgWOFMNAztSUfoac91V7ceH8lte+WSOua9i/6XJQBx7I8A3ebbRzV3pyQINttfUsK31+Wgb5/f5TJEV9dbpX0C/B7QfbtMlRTHtsl+04ys3RvzqRtRzynOOIOT0LaZ+7ja9iHTyF/lE2sS/FxSQRP8388hEK5CXONZuVGEMfXkUQ5WGx51wrcDsi2pdxVCZ/J9YsVHIdje7jg+cy1jeVn1X227RkvzWk1upRx2ahuUfV+8OYIbgCNcVKS0SBLXRGNyyVeKF6fmAxEbtovQ+Ui0wfQ6Ct6cR/ymZ8r4iBy9ennrVzYTN0/cI3icIiBJwuroySq+EtPayiRyb5H8oEOuQlZ54tcA6tsWmeeSG/kLcDUPrJ/xR6l9DMM10JzUX7lvAlzesSFGof7AYhpFZ1kitx7g/QkpwGdUadU4bB61iKK7OK6bkGF2p6HdrPgt9WMblX1bLVmxWH++EyqCiVlwUg/Kz6u1TKb4dHUdkvv6wghmiVcavGAYMzQkYcUCR+v4ozq5XgFCvSzMwwsuySNPYwcDluhm1XienvJfvmumLAwH4a2slpAFQJecR5U0cit3rYEn5zqH7rkoBoqNCYbA6shaT1M18Zf9x9uzZ2K4RyfiYkTczfTeLp0qV7+Lpf/d1zu3Gp9rtRrjGOCYa03c9lr5FRFsYcAbAUlv1UyOpmo=" autocomplete="off">
+</form>
+                        <br>
+                        <h2>
+                        </h2>
+                    </div>
+                    <table align="center" cellpadding="5" cellspacing="5" width="97%" border="2">
+                        <!-- LEVEL 0 BEGIN -->
+                        <tbody><tr>
+                            <!-- STORE 0 BEGIN   -->
+                            <td colspan="8" align="center" width="100%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2308993">崔兰
+        </a>
+        <br>3370719.1
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            06/04/2019<br>
+            左积分:
+            20 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            632
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 0 END   -->
+                        </tr>
+                        <!-- LEVEL 0 END   -->
+                        <!-- LEVEL 1 BEGIN -->
+                        <tr>
+                            <!-- STORE 1 BEGIN   -->
+                            <td colspan="4" align="center" width="50%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2308994">崔兰
+        </a>
+        <br>3370719.2
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            06/04/2019<br>
+            左积分:
+            2420 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            0
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 1 END   -->
+                            <!-- STORE 2 BEGIN   -->
+                            <td colspan="4" align="center" width="50%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2308995">崔兰
+        </a>
+        <br>3370719.3
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            06/04/2019<br>
+            左积分:
+            0 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            3032
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 2 END   -->
+                        </tr>
+                        <!-- LEVEL 1 END   -->
+                        <!-- LEVEL 2 BEGIN -->
+                        <tr>
+                            <!-- STORE 3 BEGIN   -->
+                            <td colspan="2" align="center" width="25%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2340160">兰姐2
+        </a>
+        <br>3381350.1
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            08/05/2019<br>
+            左积分:
+            1820 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            0
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 3 END   -->
+                            <!-- STORE 4 BEGIN   -->
+                            <td colspan="2" align="center" width="25%">
+<form id="j_idt357" name="j_idt357" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt357" value="j_idt357">
+<a href="#" onclick="mojarra.jsfcljs(document.getElementById('j_idt357'),{'j_idt357:j_idt358':'j_idt357:j_idt358','position':'right','sponsor':'3370719','upperline':'3370719','storeNumber':'2'},'');return false">加入新会员</a><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:4" value="RxR3qjcdXjAAgE+q8ZsmakqowRw1Jv6MhwayzP8YU+J4zEesZGtI1n8H3gqf6x6SXaSw8DSb2N2zdb/yTCh8ehRGYS45ehkkVjHz7k/Mk4iIzy+LfK3Oc7ev7gGboZIh0aXO2IQ7fVQydiJYgMIhJrN4FUUlBrePYqU/OddnZSrgI0mT+7GTIWBDbsvVtXBs0JqwqNCj7ZlbaD2H/+HzaHYpOK3+cnctMsHRQV2ImBoXKSAbXhrG4KAomptl8POkmTcOBs/vR3EzgMhr2Y9G0v3xLHEIdZWtqfiWeN4xu5oeur6/UvF1C4fHIXvGPs6o+YjRgKasYmxjUygavyOUFZ1DF8rixH27thB9uiNZhUxjP7WChrEHcL/wwB8DT/oN7ehnk1tCvBJrFjCizmbVjxYvSJoBtkRUXEGtOnWpRSjG4CtlHsaQ/eUiJrWgZx6hRTSohD5sBCSrUjFG9INAitd9TU7Qufc5RXLbxti9UGwbPIkkkRGbMZHgoVR9pBB2wJItLH1Rnn5SMNjDAuChVNKFFez2FlJD/xPOOufu8g7HoRkuohCwt/l9jDASrdJzTzrhCB40C6P8p8vqL7boNYzMHXYqElsPu1MpktJUdReLcS4IeJAAXVI1UfsQbpOZk6e6KWJjk6IBJaO9nOLOXi+3l3xltyhFVB29hBlzmjilnnGW0Dsl9m6jfyvcGb+8eFoxT0OY5sEMnZ5DgfclBA40Kfkny+iuS578kYoVHrcOP6dKSWEHIeIPROOJM6oY4GUMdOczML8wUBYPHT5bScfSN39Pd1hF/m0oyEQRovcCiI71cAzqAiUEkplngwUKTTVqgBmmtPfnb3OkOkDYvuNrQ8v+tat+Wu1nLCuH8yILYQtlYX6JpzD3LAwVT3dA9vnfbY6PBd0nSiBcP1WQLEtTym0XdyqyGtNHERysuvA+waTsYzwdfPTcC3V4AgQ8xthg4M3+bva3VMRvnN0G3m66Zf8LHNbAD6uh64f4dLpE4moXU/nzbNuqT2HqyJJDNhiBLyJLWKypyzogxsylHdtXDuhbGIq8hbMz2DgPzGMcwFkArsxjG8/HNojG2yuZqhkGoL8OEIT5Jcw5GkdZD2s43ConnHXfNBJfxmI8HofAAq927uSAUFs1jkIniIVAatADpAXxDi9eX9nJn1VXqMGz0TLrrscrktjRNa7dla2PqlEpB/tTOHZcEQcfqpcDYdCVPe/O49Hec8dOxyDNJOUk/pte7jzUAffGAPcxO32mHhR5sMM/DsDMDaMr4cE/OMHtT3FFOgduYTIcJdSZIjDoYZSy4buLKPpGbqzGVrk=" autocomplete="off">
+</form>
+
+
+                            </td>
+                            <!-- STORE 4 END   -->
+                            <!-- STORE 5 BEGIN   -->
+                            <td colspan="2" align="center" width="25%">
+<form id="j_idt376" name="j_idt376" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt376" value="j_idt376">
+<a href="#" onclick="mojarra.jsfcljs(document.getElementById('j_idt376'),{'j_idt376:j_idt377':'j_idt376:j_idt377','position':'left','sponsor':'3370719','upperline':'3370719','storeNumber':'3'},'');return false">加入新会员</a><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:5" value="t+eGbgjbEDeQHWQRHpjVwQJqqESuAXiHPZzfGH8ojz8ArGrZJu8Mti1mNMD+Oy8BOuFfLu8RzIUs4sXWp1+XPHQpfodk3Q289x2tnrJm3tgXaevpdmH/XuOeUvcaQnlVZpqWYhuMrnvWYQQ3oOrAKtLdSBrCOPIu8BEHFbzk5fkqPHO4ucQAEtcj+Xhz73wiQ3xE539X7O/Xx+9YFtUVgo0j+dFL/0nTjQQbjUcUBlym+oneQTdd5d686qh8dF6kdUBTxDBq24Nosh9qlovONl+iekHbfIJ5mj8H5UxlplmvRlgxeTxTgyZZQU0szuwopYQ8qQiN3u0mh4xb5qyIZk+PgCOBR9LzdM0QidkQ4NR+P3o5/WNuNKDSK6RdxqGFR6BLEd9rT/z7uiEsfthoG1ZFLUxyxMuv+Qinr2a5eP4eiN0OgIBzumT3D0BU1aChzlNy03se86SjGzzUUAYOzPlDY2nH9iRQO9MNZcbrJwHGU2hyRxucFDq6iWV3mTC1Pe5qSg9HnwxMXj3LGbV4HfSmHRn1zxeHawn+3exYHP3Tx75+ylDd8drbz8JHUpb253w3jE4ftJrfQROZA7+gbK/hPDdejyzVt72MsgA0RsSuTwVF4xUdxoDBgi/aIsKwBluwLahZBob4MkWWgfglSkRxJulOcr1B1a4wQlU00YXd3nuUjMyN2xHPEa5OhzhekK4orKvNh7RKHh1/4TdCt3PM5/E4gwYBViERRXDdYMY2MbqO7QC1hu2DfCy0K0f4TrhyNCeE5E/eIivOtea4JfzCLtmkGmgB7eIn10XEQSXggP6SC79vXl3s3HMSpHxG2XdNKNSzRFVHXdkwxtjsIumDe/K2RKpYd8uGnF5t0aeLOBwkgh6RsQtz4aC9/CKTXu/WN9GiC5kCqljg4ZaHVlKhmHiKTNAoiqibbFLp5eVhOjiSwFe/VjW/3Te1rzbqenBYDAhSaNCOgFmwguO/BhrD90mwN0XJkXvchAjkVb5UOjnVUGyku+omkW1WW/c2FeucGlpcnT0jIC4xEbCkdFSwLhAyD9EXLKR781ubNdPv2kuy/LS6uiw0tnV7wTYM7ZsX+RaKvPSv/qZzaZkulh1ewUt7TAADQK3JJGFigfO9Fk7+MDi3Ck8PJ9X9jDZUQufJZcMesmm0N1YPLyH6zaeXU/kCfcxL1nn0bhBO7SwXxTq1ChcjfRjHoEfXu6Wo/VIsCg5A8iScT0lkZkC1SuZ0QI5aIYJpRwtXMTjMAags8Q8lkrmkSbij2vWGRS/5Z3ySGtKbjMnCIEfi3eM7um35ULFbvFzQgY1yjZJs6ic=" autocomplete="off">
+</form>
+
+
+                            </td>
+                            <!-- STORE 5 END   -->
+                            <!-- STORE 6 BEGIN   -->
+                            <td colspan="2" align="center" width="25%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2309016">林亚D
+        </a>
+        <br>3370729.1
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            06/04/2019<br>
+            左积分:
+            0 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            2432
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 6 END   -->
+                        </tr>
+                        <!-- LEVEL 2 END   -->
+                        <!-- LEVEL 3 BEGIN -->
+                        <tr>
+                            <!-- STORE 7 BEGIN   -->
+                            <td align="center" width="12.5%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2340161">兰姐2
+        </a>
+        <br>3381350.2
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            08/05/2019<br>
+            左积分:
+            1820 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            0
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 7 END   -->
+                            <!-- STORE 8 BEGIN   -->
+                            <td align="center" width="12.5%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2340162">兰姐2
+        </a>
+        <br>3381350.3
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            08/05/2019<br>
+            左积分:
+            0 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            0
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 8 END   -->
+                            <!-- STORE 9 BEGIN   -->
+                            <td align="center" width="12.5%">
+
+
+                            </td>
+
+                            <td align="center" width="12.5%">
+
+
+                            </td>
+                            <td align="center" width="12.5%">
+
+
+                            </td>
+                            <td align="center" width="12.5%">
+
+
+                            </td>
+                            <!-- STORE 12 END   -->
+                            <!-- STORE 13 BEGIN   -->
+                            <td align="center" width="12.5%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2309017">林亚D
+        </a>
+        <br>3370729.2
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            06/04/2019<br>
+            左积分:
+            0 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            0
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 13 END   -->
+                            <!-- STORE 14 BEGIN   -->
+                            <td align="center" width="12.5%">
+    <div class="activeStore">
+        <a href="storeNetworks.xhtml?sId=2309018">林亚D
+        </a>
+        <br>3370729.3
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        
+            06/04/2019<br>
+            左积分:
+            0 &nbsp;&nbsp;&nbsp;&nbsp;
+            右积分:
+            2432
+
+        
+    </div>
+
+
+                            </td>
+                            <!-- STORE 14 END   -->
+                        </tr>
+                        <!-- LEVEL 3 END   -->
+                    </tbody></table>
+
+				<br> <br>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+<div class="bottom_all">
+		<div class="bottom">
+			<div class="bottom_1">
+				<div class="bottom_1_1">
+					<a target="_blank" href="https://www.bbb.org/sanjose/business-reviews/health-and-diet-products-retail/fkc-international-in-monterey-park-ca-13212036">
+						<div id="foot_bbb"> </div>
+					</a>
+				</div>
+				<div class="bottom_1_2">
+					<div class="bottom_1_2_1">
+<form id="j_idt610" name="j_idt610" method="post" action="/members/storeInfo/storeNetworks.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt610" value="j_idt610">
+<input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:6" value="R2bcd2x4rg2KMoTx30ivNf2+gltpxLa7JA/xyGH8jqob+ypgw5r3LZbY++uW7jn3DwAWzPZFZwVw4TSXK6hc70+GLENIlHdq638Mtqx2TqiOT6xCzV1GyGxPuY2bqoo3ashggiOSX0EofQNZohxsuNC2e0NwnMbSfGL05WNOZsFwYuA2x8G/C4NC+quA/Hm5kUFxMNEVkbBF83Yv5v24KfGDJZAGPphNyReJ8oAZb3siZffGp6Q1Ow16aLPESzsMy66RNyFFYGxQD1BI7S9KO6B5SuxNu4cg/vHHiHI28Pipv6GMRCk9vfROIoxnkupw0ZAAnipmoSjYcDn6dfqrUOgyefgQXDiqbJBwDKQY1AyGeTrLylhC0fEr5fJHYZ4RdjKKFnKHzvalVxrX9aJp36x6rJyXeNfHd7LvmiRQTZposeDQDwqPFSrShZdA9nQMk/KvmMhLNN+hg0oERvVjF3p3UZab31KWGxLhkqtsxfw6GRbfImPUy5SufaGTvxnY/sAnc1wustSLDSjjO36rQXRDzC6UpF+TOR17VUfLqtdN2zVUN3p5P6LYa3Z3lumKeFQ+wuGs5sWwLrXcgymGXGh3Iq2uyN72TeezI9xR9det+2nvsYltrQ08HB9vIWnNVi5d7/67LFNHjyfbeeMPdih0kSxzqVms2UeWapyFPy6hSU256DcuGRIqRfWJ3QBXqPcGnArB0kIL9DYQ1w0aVzZte3MfhJdQhJdbiqfiWtHKnJc5jyliFWJ2eCKED3ZTTPHcZApjtZQoP+Y6BPAeUMGsGTbPJAyb/OgQEuNAEWhKWEwcCDCqaANu2JKzUs2piO7hl4qvi30W3EPgvk6ObhPr/W75r1O4FjFJeYRf7mmY19C2PjACrox3MtCu1DWZ9eOZCb63LE/ltBR1aiHHFrCSeEE0tNXxHpjnupG+bDNDn+UBLG67AhneTGq/xrPcbuzCMsH8J/m4gmUOADrWMBogQBuV6I6UrwI04iaZBMQGAg+FUHndDxVKObBBVQ6C4e5nnwaTp752bGCH7cofaxy9MjorOiYuSr/HzBVdmVTLbYh0I36Tz7K1HNwY1bOi5vFUC4pLGeq5kGt7aI0rmqow07yXmV6UiUYjgjpMi6y8rBciWn+Q6DuqvF2BmeunORWEpmcbvxeFL2H6WTQfpmp8z5GOYxcn4S5Ai9kGhize7/vY7Noh7/7UJaauUB5XuXNcCZNI/+cAZMMIKMQkUaDBXYZpSl6SzSh3H/+C19UltuFDOwP62bCrfZydMeJq23q8XpSGRdjQUHLHRbcH1WQ7i3auoISaL18TboNK8+c=" autocomplete="off">
+</form>
+						
+						<a href="/public/legalInfo/privacy_policy.xhtml">个人信息安全说明 </a> <a href="/public/legalInfo/term_of_use.xhtml">网站使用条例</a> <a href="/public/faq/faq.xhtml">常见问题</a> <a href="/public/careers/career.xhtml">工作机会 </a>
+					</div>
+
+				</div>
+			</div>
+			<br>
+			<div class="bottom_1_2_1" align="center">
+
+				<a href="/home.xhtml"><div id="fkc_foot_logo"></div></a>
+				<span id="footer_copyright">
+					 <font color="#989898"> © Copyright FKC International, Inc. 2004-2021. </font>
+				</span>
+			</div>
+		</div>
+</div>
+
+
+
+
+</body></html>
