@@ -6,7 +6,14 @@ from localMQ import *
 from dao import *
 from sele import *
 
-rootsId = '2410799'
+import random
+import logging
+
+# 配置日志
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+#rootsId = '2410799'
+rootsId = '2428971'
 username = '3403001'
 password = '123456'
 host_name= '139.159.182.45'
@@ -195,15 +202,18 @@ def process_tasks_from_queue(connection,conn, cookies):
         # 从队列中获取任务
         task = dequeue_task(conn)
         if task is None:
-            print("No more tasks in the queue.")
+            logging.info("No more tasks in the queue.")
             break
 
         task_id, sId = task
-        print(f"Processing task: {sId}")
+        logging.info('task: %s', task)
 
         # 执行任务
         params = {'sId': sId}
-        response = fetch_store_info(cookies, params)
+        #response = fetch_store_info(cookies, params)
+        with open('total.html', 'r', encoding='utf-8') as file:
+            response = file.read()
+
         data = extract_store_data(response)
 
         add_tasks_from_data(data, conn)
@@ -213,10 +223,12 @@ def process_tasks_from_queue(connection,conn, cookies):
 
         # 完成任务后从队列中删除
         complete_task(conn, task_id)
+        random_delay = random.uniform(5, 15)
+        time.sleep(random_delay)
 
 def main():
-
-    cookies = get_cookies_from_fkcn(username, password);
+    logging.info("------------------------------process begin------------------------------\n\n")
+    #cookies = get_cookies_from_fkcn(username, password);
 
     connection = create_db_connection(host_name, db_name, db_user, db_password)
     db_conn = create_connection('task_queue.db')
@@ -227,15 +239,9 @@ def main():
         enqueue_task(db_conn, rootsId)
 
     process_tasks_from_queue(connection,db_conn, cookies)
+    logging.info("------------------------------process end------------------------------\n\n")
 
-
-    # with open('total.html', 'r', encoding='utf-8') as file:
-    #     html_content = file.read()
-
-    # data = extract_store_data(html_content)
-    # data = add_node_info(data, tree_structure)
-    # print(data)
-    # insert_or_update_data(connection,data)
+    db_conn.close()
 
 if __name__ == "__main__":
     main()
