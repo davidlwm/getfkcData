@@ -1,6 +1,7 @@
 
 import time
 import json
+import os
 path_to_cookies = 'cookies.json'
 
 from selenium import webdriver
@@ -15,13 +16,22 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def save_cookies(cookies, path):
     cookies_dict = {cookie['name']: cookie['value'] for cookie in cookies}
+    # 确保文件存在，如果不存在则创建
+    open(path, 'a').close()
+    # 清空文件内容
     with open(path, 'w') as file:
+        # 保存新的cookies字典
         json.dump(cookies_dict, file)
 
 def load_cookies(path):
-    with open(path, 'r') as file:
-        cookies_dict = json.load(file)
-    return cookies_dict
+    # 检查文件是否存在且不为空
+    if os.path.exists(path) and os.path.getsize(path) > 0:
+        with open(path, 'r') as file:
+            cookies_dict = json.load(file)
+        return cookies_dict
+    else:
+        # 如果文件不存在或为空，返回空字典
+        return {}
 
 def get_cookies_from_fkcn(username, password):
     # 使用 webdriver-manager 来自动管理驱动程序版本

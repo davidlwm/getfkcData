@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 import logging
+import sys
 
 def create_db_connection(host_name, db_name, db_user, db_password):
     connection = None
@@ -13,6 +14,7 @@ def create_db_connection(host_name, db_name, db_user, db_password):
         )
     except Error as e:
         logging.error(f"The error '{e}' occurred")
+        sys.exit("Database connection failed")  # 退出程序
 
     return connection
 
@@ -28,7 +30,7 @@ def create_binary_tree_table(conn):
                                         node_name VARCHAR(255) DEFAULT NULL,
                                         left_score INT DEFAULT NULL,
                                         right_score INT DEFAULT NULL,
-                                        timestamp VARCHAR(32) DEFAULT NULL,
+                                        date VARCHAR(32) DEFAULT NULL,
                                         depth INT DEFAULT NULL,
                                         remarks TEXT,
                                         sId VARCHAR(8) DEFAULT NULL,
@@ -45,7 +47,7 @@ def create_binary_tree_table(conn):
 
 def insert_or_update_data(connection, data):
     sql = """
-    INSERT INTO BinaryTree (node_id, left_child, right_child, parent_node, node_name, left_score, right_score, timestamp, sId, last_update_time)
+    INSERT INTO BinaryTree (node_id, left_child, right_child, parent_node, node_name, left_score, right_score, date, sId, last_update_time)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, CONVERT_TZ(NOW(), 'UTC', '+08:00'))
     ON DUPLICATE KEY UPDATE
     left_child = VALUES(left_child),
@@ -54,7 +56,7 @@ def insert_or_update_data(connection, data):
     node_name = VALUES(node_name),
     left_score = VALUES(left_score),
     right_score = VALUES(right_score),
-    timestamp = VALUES(timestamp),
+    date = VALUES(date),
     sId = VALUES(sId),
     last_update_time = CONVERT_TZ(NOW(), 'UTC', '+08:00');
     """
@@ -84,4 +86,3 @@ def insert_or_update_data(connection, data):
         logging.error(f"The error '{e}' occurred")
     finally:
         cursor.close()
-

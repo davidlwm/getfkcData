@@ -70,9 +70,10 @@ def main():
     logging.info("------------------------------process begin------------------------------\n\n")
     print("start")
     cookies = load_cookies(path_to_cookies)
-    #cookies = get_cookies_from_fkcn(username, password);
+    if not cookies:
+        cookies = get_cookies_from_fkcn(username, password)
     print(cookies)
-    print("end")
+
     conn = create_db_connection(host_name, db_name, db_user, db_password)
     create_binary_tree_table(conn)
     create_tasks_table(conn)
