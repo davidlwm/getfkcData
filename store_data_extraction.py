@@ -2,7 +2,7 @@ import re
 from lxml import html
 import requests
 
-from taskHandle import *
+from task_queue_management import *
 
 # 树的结构用字典表示，每个节点对应其父节点的编号及其作为左（L）或右（R）子节点的信息
 tree_structure = {
@@ -42,9 +42,8 @@ def add_children_info(data, tree_structure):
 
     return data
 
-
 def add_tasks_from_data(data, conn):
-    """ 从数据中提取特定任务并添加到 SQLite 队列 """
+    """ 从数据中提取特定任务并添加到队列 """
     for item in data:
         if 7 <= item['position_id'] <= 14:
             enqueue_task(conn, item['sId'])
@@ -57,7 +56,6 @@ def add_node_info(data, tree_structure):
     data_complete = add_children_info(data_with_parents, tree_structure)
 
     return data_complete
-
 
 def fetch_store_info(cookies, params):
     headers = {

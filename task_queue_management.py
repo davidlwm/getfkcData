@@ -92,7 +92,3 @@ def reset_processing_tasks(conn):
     cursor.execute(sql_reset_task)
     conn.commit()
     cursor.close()
-
-
-def demo():
-    pass

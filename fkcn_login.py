@@ -1,5 +1,7 @@
 
 import time
+import json
+path_to_cookies = 'cookies.json'
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,15 +13,17 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
+def save_cookies(cookies, path):
+    cookies_dict = {cookie['name']: cookie['value'] for cookie in cookies}
+    with open(path, 'w') as file:
+        json.dump(cookies_dict, file)
+
+def load_cookies(path):
+    with open(path, 'r') as file:
+        cookies_dict = json.load(file)
+    return cookies_dict
 
 def get_cookies_from_fkcn(username, password):
-    print("end")
-    # 指定ChromeDriver的路径
-    #chrome_driver_path = 'H:/美的代码/midea/go/c++/trunk/efficiency_promote/simulation_click/revesivation/chromedriver.exe'
-
-    # 创建WebDriver实例
-    #driver = webdriver.Chrome(executable_path=chrome_driver_path)
-
     # 使用 webdriver-manager 来自动管理驱动程序版本
     service = Service(ChromeDriverManager().install())
 
@@ -62,8 +66,7 @@ def get_cookies_from_fkcn(username, password):
 
     # 获取cookies
     cookies = driver.get_cookies()
-    cookies = {cookie['name']: cookie['value'] for cookie in cookies}
-
+    save_cookies(cookies, path_to_cookies)
     print(cookies)
     # 关闭WebDriver
     driver.quit()

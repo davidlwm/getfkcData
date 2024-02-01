@@ -22,16 +22,15 @@ host_name= '139.159.182.45'
 db_name = 'fkc'
 db_user = 'root'
 db_password = '123456'
-connection = ''
-cookies = ''
 taskCount = 0
 
-def process_store_info(params, cookies,connection):
-    global  username, password, tree_structure
+
+def process_store_info(params, cookies,conn):
+    global username, password, tree_structure
 
     response = fetch_store_info(cookies, params)
     if not check_for_login_state(response):
-        get_cookies_from_fkcn(username, password)
+        cookies = get_cookies_from_fkcn(username, password)
         time.sleep(5)
         response = fetch_store_info(cookies, params)
 
@@ -39,17 +38,17 @@ def process_store_info(params, cookies,connection):
     #     response = file.read()
     data = extract_store_data(response)
 
-    add_tasks_from_data(data, connection)
+    add_tasks_from_data(data, conn)
     data = add_node_info(data, tree_structure)
 
-    insert_or_update_data(connection, data)
+    insert_or_update_data(conn, data)
 
-def process_tasks_from_queue(connection, cookies):
+def process_tasks_from_queue(conn, cookies):
     """ 从队列中处理任务 """
     global taskCount
     while True:
         # 从队列中获取任务
-        task = dequeue_task(connection)
+        task = dequeue_task(conn)
         if task is None:
             logging.info("No more tasks in the queue.")
             break
@@ -59,9 +58,9 @@ def process_tasks_from_queue(connection, cookies):
         # 执行任务
         params = {'sId': sId}
 
-        process_store_info(params, cookies,connection)
+        process_store_info(params, cookies,conn)
         # 完成任务后从队列中删除
-        complete_task(connection, task_id)
+        complete_task(conn, task_id)
         taskCount = taskCount + 1
         if taskCount >= 20:
             time.sleep(random.uniform(60, 120))
@@ -70,7 +69,9 @@ def process_tasks_from_queue(connection, cookies):
 def main():
     logging.info("------------------------------process begin------------------------------\n\n")
     print("start")
-    cookies = get_cookies_from_fkcn(username, password);
+    cookies = load_cookies(path_to_cookies)
+    #cookies = get_cookies_from_fkcn(username, password);
+    print(cookies)
     print("end")
     conn = create_db_connection(host_name, db_name, db_user, db_password)
     create_binary_tree_table(conn)
