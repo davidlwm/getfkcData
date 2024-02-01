@@ -1,7 +1,8 @@
 
-from dataHandle import *
-from dao import *
-from sele import *
+from store_data_extraction import *
+from task_queue_management import *
+from data_operations import *
+from fkcn_login import *
 
 import random
 import logging
@@ -45,6 +46,7 @@ def process_store_info(params, cookies,connection):
 
 def process_tasks_from_queue(connection, cookies):
     """ 从队列中处理任务 """
+    global taskCount
     while True:
         # 从队列中获取任务
         task = dequeue_task(connection)
@@ -60,27 +62,26 @@ def process_tasks_from_queue(connection, cookies):
         process_store_info(params, cookies,connection)
         # 完成任务后从队列中删除
         complete_task(connection, task_id)
-        # taskCount = taskCount +1
-        # if taskCount >= 20:
-        #     time.sleep(random.uniform(30, 50))
-        random_delay = random.uniform(15, 25)
-        time.sleep(random_delay)
+        taskCount = taskCount + 1
+        if taskCount >= 20:
+            time.sleep(random.uniform(60, 120))
+        time.sleep(random.uniform(25, 100))
 
 def main():
     logging.info("------------------------------process begin------------------------------\n\n")
     print("start")
     cookies = get_cookies_from_fkcn(username, password);
     print("end")
-    connection = create_db_connection(host_name, db_name, db_user, db_password)
-    create_binary_tree_table(connection)
-    create_tasks_table(connection)
-    reset_processing_tasks(connection)
-    count = count_pending_tasks(connection)
-    if count ==0:
-        enqueue_task(connection, rootsId)
+    conn = create_db_connection(host_name, db_name, db_user, db_password)
+    create_binary_tree_table(conn)
+    create_tasks_table(conn)
+    reset_processing_tasks(conn)
+    count = count_pending_tasks(conn)
+    if count == 0:
+        enqueue_task(conn, rootsId)
 
-    process_tasks_from_queue(connection, cookies)
-    connection.close()
+    process_tasks_from_queue(conn, cookies)
+    conn.close()
     logging.info("------------------------------process end------------------------------\n\n")
 
 if __name__ == "__main__":

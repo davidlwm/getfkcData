@@ -13,7 +13,7 @@ def create_tasks_table(conn):
         cursor = conn.cursor()
         cursor.execute(sql_create_tasks_table)
     except Error as e:
-        print(e)
+        logging.error(f"The error '{e}' occurred")
 
 # Check if a task exists in the database
 def task_exists(cursor, task):
