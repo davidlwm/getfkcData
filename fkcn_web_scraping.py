@@ -14,10 +14,11 @@ log_file_path = os.path.join(os.getcwd(), 'my_log.log')
 # Configure logging to write to the specified log file
 logging.basicConfig(level=logging.INFO, filename=log_file_path, format='%(asctime)s - %(levelname)s - %(message)s')
 
-#rootsId = '2410799'
-rootsId = '2428971'
-username = '3403001'
-password = '123456'
+rootsId = '737980'
+#rootsId = '2428971'
+#username = '3403001'
+username = '2420187'
+password = '888999'
 host_name = '139.159.182.45'
 db_name = 'fkc'
 db_user = 'root'
@@ -63,8 +64,9 @@ def process_tasks_from_queue(conn, cookies):
         complete_task(conn, task_id)
         taskCount = taskCount + 1
         if taskCount >= 20:
-            time.sleep(random.uniform(60, 120))
-        time.sleep(random.uniform(25, 100))
+            time.sleep(random.uniform(60, 150))
+            taskCount = 0
+        time.sleep(random.uniform(25, 40))
 
 def main():
     logging.info("------------------------------process begin------------------------------\n\n")
