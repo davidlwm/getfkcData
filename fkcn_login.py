@@ -42,7 +42,7 @@ def get_cookies_from_fkcn(username, password):
 
     #driver = webdriver.Chrome()
     driver.get('https://www.fkcn.com/index.xhtml')
-    print("end")
+
     # 等待元素加载
     wait = WebDriverWait(driver, 10)
     china_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[.//img[contains(@src, 'zh_flag.gif')]]")))

@@ -1,4 +1,6 @@
 import re
+import sys
+import json
 from lxml import html
 import requests
 
@@ -58,6 +60,12 @@ def add_node_info(data, tree_structure):
     return data_complete
 
 def fetch_store_info(cookies, params):
+    print(cookies)
+    cookie_name = list(cookies.keys())[0]
+    cookie_value = cookies[cookie_name]
+    cookies = {
+        cookie_name: cookie_value,
+    }
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Language': 'zh-CN,zh;q=0.9',

@@ -18,15 +18,15 @@ logging.basicConfig(level=logging.INFO, filename=log_file_path, format='%(asctim
 rootsId = '2428971'
 username = '3403001'
 password = '123456'
-host_name= '139.159.182.45'
+host_name = '139.159.182.45'
 db_name = 'fkc'
 db_user = 'root'
 db_password = '123456'
 taskCount = 0
 
 
-def process_store_info(params, cookies,conn):
-    global username, password, tree_structure
+def process_store_info(params, cookies, conn):
+    #global username, password, tree_structure
 
     response = fetch_store_info(cookies, params)
     if not check_for_login_state(response):
@@ -58,7 +58,7 @@ def process_tasks_from_queue(conn, cookies):
         # 执行任务
         params = {'sId': sId}
 
-        process_store_info(params, cookies,conn)
+        process_store_info(params, cookies, conn)
         # 完成任务后从队列中删除
         complete_task(conn, task_id)
         taskCount = taskCount + 1
