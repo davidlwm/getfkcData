@@ -64,7 +64,7 @@ def process_tasks_from_queue(conn, cookies):
         complete_task(conn, task_id)
         taskCount = taskCount + 1
         if taskCount >= 20:
-            time.sleep(random.uniform(60, 150))
+            time.sleep(random.uniform(60, 100))
             taskCount = 0
         time.sleep(random.uniform(25, 40))
 
