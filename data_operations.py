@@ -34,6 +34,7 @@ def create_binary_tree_table(conn):
                                         depth INT DEFAULT NULL,
                                         remarks TEXT,
                                         sId VARCHAR(8) DEFAULT NULL,
+                                        total_stores int DEFAULT NULL,
                                         last_update_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                                         PRIMARY KEY (primary_id),
                                         UNIQUE KEY node_id (node_id)
@@ -86,3 +87,78 @@ def insert_or_update_data(connection, data):
         logging.error(f"The error '{e}' occurred")
     finally:
         cursor.close()
+
+def update_data_single(connection, data):
+    # 检查记录是否存在
+    check_sql = "SELECT COUNT(*) FROM BinaryTree WHERE node_id = %s;"
+    check_values = (data['node_id'],)
+
+    cursor = connection.cursor()
+    cursor.execute(check_sql, check_values)
+    record_count = cursor.fetchone()[0]
+
+    if record_count == 0:
+        # 如果记录不存在，执行插入操作
+        insert_sql = """
+        INSERT INTO BinaryTree (
+            node_id,
+            left_child,
+            right_child,
+            parent_node,
+            node_name,
+            left_score,
+            right_score,
+            date,
+            sId,
+            total_stores,
+            last_update_time
+        ) VALUES (
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CONVERT_TZ(NOW(), 'UTC', '+08:00')
+        );
+        """
+        insert_values = (
+            data['node_id'],
+            data.get('left_child_node_id'),
+            data.get('right_child_node_id'),
+            data.get('parent_node_id'),
+            data['name'],
+            int(data['left_score']),
+            int(data['right_score']),
+            data['date'],
+            data['sId'],
+            data['total_stores']
+        )
+
+        try:
+            cursor.execute(insert_sql, insert_values)
+            connection.commit()
+            logging.info("New record inserted for node_id {}".format(data['node_id']))
+        except Error as e:
+            logging.error(f"The error '{e}' occurred during insertion")
+    else:
+        # 如果记录存在，执行更新操作
+        update_sql = """
+        UPDATE BinaryTree
+        SET
+            left_child = %s,
+            right_child = %s,
+            total_stores = %s,
+            last_update_time = CONVERT_TZ(NOW(), 'UTC', '+08:00')
+        WHERE node_id = %s;
+        """
+        update_values = (
+            data.get('left_child_node_id'),
+            data.get('right_child_node_id'),
+            data.get('total_stores'),
+            data['node_id']
+        )
+
+        try:
+            cursor.execute(update_sql, update_values)
+            connection.commit()
+            logging.info("Data updated successfully for node_id {}".format(data['node_id']))
+        except Error as e:
+            logging.error(f"The error '{e}' occurred during update")
+        finally:
+            cursor.close()
+

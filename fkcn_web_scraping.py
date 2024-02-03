@@ -14,10 +14,10 @@ log_file_path = os.path.join(os.getcwd(), 'my_log.log')
 # Configure logging to write to the specified log file
 logging.basicConfig(level=logging.INFO, filename=log_file_path, format='%(asctime)s - %(levelname)s - %(message)s')
 
-rootsId = '737980'
+rootsId = '2191480'
 #rootsId = '2428971'
 #username = '3403001'
-username = '2420187'
+username = '3333661'
 password = '888999'
 host_name = '139.159.182.45'
 db_name = 'fkc'
@@ -41,6 +41,9 @@ def process_store_info(params, cookies, conn):
 
     add_tasks_from_data(data, conn)
     data = add_node_info(data, tree_structure)
+
+    rootNode = data.pop(0)
+    update_data_single(conn, rootNode)
 
     insert_or_update_data(conn, data)
 
@@ -86,6 +89,7 @@ def main():
 
     process_tasks_from_queue(conn, cookies)
     conn.close()
+    print("end")
     logging.info("------------------------------process end------------------------------\n\n")
 
 if __name__ == "__main__":
