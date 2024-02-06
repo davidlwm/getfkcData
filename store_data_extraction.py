@@ -84,6 +84,8 @@ def fetch_store_info(cookies, params):
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Windows"',
     }
+    #加try
+
     response = requests.get(
         'https://www.fkcn.com/members/storeInfo/storeNetworks.xhtml',
         params=params,

@@ -18,6 +18,25 @@ def create_db_connection(host_name, db_name, db_user, db_password):
 
     return connection
 
+
+def fetch_root_nodes_sId(conn):
+    # SQL 查询，只选择没有父节点的节点的 sId
+    query = "SELECT sId FROM BinaryTree WHERE primary_id <> 1 and parent_node IS NULL;"
+
+    try:
+        # 创建一个游标对象，用于执行 SQL 语句
+        with conn.cursor() as cursor:
+            # 执行 SQL 查询
+            cursor.execute(query)
+            # 获取所有查询结果
+            results = cursor.fetchall()
+            # 将结果转换为单个列表，假设你只想要 sId 列表
+            sId_list = [row[0] for row in results] if results else []
+            return sId_list
+    except Exception as e:
+        print(f"Error fetching root nodes' sId: {e}")
+        return []
+
 def create_binary_tree_table(conn):
     """ Create the BinaryTree table if it doesn't exist """
     try:
@@ -154,6 +173,7 @@ def update_data_single(connection, data):
         )
 
         try:
+            #print(update_sql, update_values)
             cursor.execute(update_sql, update_values)
             connection.commit()
             logging.info("Data updated successfully for node_id {}".format(data['node_id']))
@@ -162,3 +182,28 @@ def update_data_single(connection, data):
         finally:
             cursor.close()
 
+def update_parent_nodes(connection, data):
+    # SQL 更新语句模板
+    update_sql = """
+        UPDATE BinaryTree
+        SET
+            parent_node = %s
+        WHERE node_id = %s;
+    """
+
+    # 准备更新数据
+    values = [(d.get('parent_node_id', ''), d['node_id']) for d in data]
+
+    cursor = connection.cursor()
+    try:
+        # 使用executemany来一次性更新多行
+        #print(update_sql, values)
+        cursor.executemany(update_sql, values)
+        connection.commit()
+        logging.info("Parent nodes updated successfully")
+    except Error as e:
+        # 如果发生错误则回滚
+        connection.rollback()
+        logging.error(f"The error '{e}' occurred")
+    finally:
+        cursor.close()
