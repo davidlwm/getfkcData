@@ -3,11 +3,12 @@ from mysql.connector import Error
 import logging
 import sys
 
-def create_db_connection(host_name, db_name, db_user, db_password):
+def create_db_connection(host_name,port, db_name, db_user, db_password):
     connection = None
     try:
         connection = mysql.connector.connect(
             host=host_name,
+            port=port,
             database=db_name,
             user=db_user,
             password=db_password

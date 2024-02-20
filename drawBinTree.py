@@ -9,7 +9,7 @@ db_password = '123456'
 
 # 建立数据库连接
 def get_db_connection():
-    return pymysql.connect(host=host_name, user=db_user, password=db_password, db=db_name, charset='utf8mb4')
+    return pymysql.connect(host=host_name, port=3399, user=db_user, password=db_password, db=db_name, charset='utf8mb4')
 
 # 递归查询所有子节点数据
 def fetch_all_tree_data(cursor, tree_data, node_id=None):

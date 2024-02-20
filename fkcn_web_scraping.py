@@ -20,9 +20,10 @@ rootsId = '589687'
 username = '2341413'
 password = '1788'
 host_name = '139.159.182.45'
+port = '3399'
 db_name = 'fkc'
-db_user = 'root'
-db_password = '123456'
+db_user = '7HzVCf'
+db_password = 'jPlB44kOlgjH'
 taskCount = 0
 
 
@@ -79,7 +80,7 @@ def main():
         cookies = get_cookies_from_fkcn(username, password)
     print(cookies)
 
-    conn = create_db_connection(host_name, db_name, db_user, db_password)
+    conn = create_db_connection(host_name, port, db_name, db_user, db_password)
     create_binary_tree_table(conn)
     create_tasks_table(conn)
     reset_processing_tasks(conn)
@@ -93,7 +94,7 @@ def main():
     logging.info("------------------------------process end------------------------------\n\n")
 
 def main01():
-    conn = create_db_connection(host_name, db_name, db_user, db_password)
+    conn = create_db_connection(host_name, port, db_name, db_user, db_password)
     # 取数据
     sIdList = fetch_root_nodes_sId(conn)
     cookies = load_cookies(path_to_cookies)
